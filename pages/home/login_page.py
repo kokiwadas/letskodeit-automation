@@ -43,12 +43,18 @@ class LoginPage(SeleniumDriver):
     def click_confirm_button(self):
         self.element_click(self._confirm_button, locator_type='xpath')
 
-    def login(self, user_email, user_password):
+    def login(self, user_email='', user_password=''):
         self.click_login_link()
+        self.enter_email('')
         self.enter_email(user_email)
         self.enter_password(user_password)
         self.click_confirm_button()
 
     def verify_login_success(self):
         result = self.is_element_present("//*[@id='navbar']//li[4]/a/img", locator_type='xpath')
+        return result
+
+    def verify_login_failure(self):
+        result = self.is_element_present("//body//div[contains(text(), 'Invalid email or password.')]",
+                                         locator_type='xpath')
         return result

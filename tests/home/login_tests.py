@@ -2,25 +2,28 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from pages.home.login_page import LoginPage
 import unittest
+import pytest
 
 
 class LoginTests(unittest.TestCase):
 
-    def test_valid_login(self):
-        base_url = 'https://learn.letskodeit.com'
-        driver = webdriver.Chrome()
-        driver.maximize_window()
-        driver.get(base_url)
-        driver.implicitly_wait(10)
+    base_url = 'https://learn.letskodeit.com'
+    driver = webdriver.Chrome()
+    driver.maximize_window()
+    driver.implicitly_wait(10)
+    login_page = LoginPage(driver)
 
-        login_page = LoginPage(driver)
-        login_page.login('koki.wadas@gmail.com', 'Sheffield1')
-
-        result = login_page.verify_login_success()
+    @pytest.mark.run(order=1)
+    def test_invalid_login(self):
+        self.driver.get(self.base_url)
+        self.login_page.login('wrong@email.com', 'wrongpassword')
+        result = self.login_page.verify_login_failure()
         assert result is True
 
-        driver.quit()
+    @pytest.mark.run(order=2)
+    def test_valid_login(self):
+        self.login_page.login('koki.wadas@gmail.com', 'Sheffield1')
+        result = self.login_page.verify_login_success()
+        assert result is True
+        self.driver.quit()
 
-
-tt = LoginTests()
-tt.test_valid_login()

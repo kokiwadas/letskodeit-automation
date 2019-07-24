@@ -55,6 +55,7 @@ class SeleniumDriver:
     def send_chars(self, data, locator, locator_type="id"):
         try:
             element = self.get_element(locator, locator_type)
+            element.clear()
             element.send_keys(data)
             self.log.info(f"Send data to element with locator: {locator} locatorType: {locator_type}")
         except:
