@@ -16,9 +16,6 @@ class LoginTests(unittest.TestCase):
         login_page = LoginPage(driver)
         login_page.login('koki.wadas@gmail.com', 'Sheffield1')
 
-        confirm_button = driver.find_element(By.XPATH, "//form[@id='new_user']//input[@name='commit']")
-        confirm_button.click()
-
         user_icon = driver.find_element(By.XPATH, f"//*[@id='navbar']//li[4]/a/img")
 
         if user_icon is not None:
