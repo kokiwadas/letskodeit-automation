@@ -1,9 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import time
+from pages.home.login_page import LoginPage
+import unittest
 
 
-class LoginTests:
+class LoginTests(unittest.TestCase):
 
     def test_valid_login(self):
         base_url = 'https://learn.letskodeit.com'
@@ -12,16 +13,8 @@ class LoginTests:
         driver.get(base_url)
         driver.implicitly_wait(10)
 
-        login_button = driver.find_element(By.XPATH, "//div[@id='navbar']//a[@href='/sign_in']")
-        login_button.click()
-
-        email_input_field = driver.find_element(By.ID, "user_email")
-        user_email = 'koki.wadas@gmail.com'
-        email_input_field.send_keys(user_email)
-
-        password_input_field = driver.find_element(By.ID, 'user_password')
-        user_password = 'Sheffield1'
-        password_input_field.send_keys(user_password)
+        login_page = LoginPage(driver)
+        login_page.login('koki.wadas@gmail.com', 'Sheffield1')
 
         confirm_button = driver.find_element(By.XPATH, "//form[@id='new_user']//input[@name='commit']")
         confirm_button.click()
