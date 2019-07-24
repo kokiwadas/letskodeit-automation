@@ -1,9 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from base.selenium_driver import SeleniumDriver
+import utilities.custom_logger as cl
+import logging
 
 
 class LoginPage(SeleniumDriver):
+
+    log = cl.custom_logger(logging.DEBUG)
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -45,3 +49,6 @@ class LoginPage(SeleniumDriver):
         self.enter_password(user_password)
         self.click_confirm_button()
 
+    def verify_login_success(self):
+        result = self.is_element_present("//*[@id='navbar']//li[4]/a/img", locator_type='xpath')
+        return result

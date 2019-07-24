@@ -16,12 +16,10 @@ class LoginTests(unittest.TestCase):
         login_page = LoginPage(driver)
         login_page.login('koki.wadas@gmail.com', 'Sheffield1')
 
-        user_icon = driver.find_element(By.XPATH, f"//*[@id='navbar']//li[4]/a/img")
+        result = login_page.verify_login_success()
+        assert result is True
 
-        if user_icon is not None:
-            print('Login successful!')
-        else:
-            print('Login failed')
+        driver.quit()
 
 
 tt = LoginTests()

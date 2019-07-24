@@ -2,7 +2,7 @@ import logging
 import inspect
 
 
-def custom_logger(log_level = logging.DEBUG):
+def custom_logger(log_level=logging.DEBUG):
 
     logger_name = inspect.stack()[1][3]
     logger = logging.getLogger(logger_name)
